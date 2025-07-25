@@ -1,0 +1,15 @@
+.main-content{
+    margin-top: 100px;
+    min-height: 100vh;
+}
+
+.footer-content{
+    height: 52px;
+}
+.offcanvas,
+.offcanvas-body{
+    overflow: visible !important;
+}
+.dropdown-menu{
+    z-index: 3000 !important;
+}
