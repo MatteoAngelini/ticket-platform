@@ -1,4 +1,4 @@
-<nav class="navbar bg-body-tertiary fixed-top mb-5" th:fragment="navbar-offcanvas">
+<nav class="navbar fixed-top mb-5" th:fragment="navbar-offcanvas" style="background-color: #e3f2fd;" data-bs-theme="light">
     <div class="container-fluid">
         <div class="d-flex justify-content-between">
             <button class="navbar-toggler" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasNavbar"
@@ -9,14 +9,14 @@
         <div>
             <a class="navbar-brand" th:href="@{/}">Help Desk</a>
         </div>
-        <div class="offcanvas offcanvas-start" tabindex="-1" id="offcanvasNavbar" aria-labelledby="offcanvasNavbarLabel"
-            data-bs-scroll="true" style="width: 10%;">
+        <div class="offcanvas offcanvas-start bg-primary text-white" tabindex="-1" id="offcanvasNavbar" aria-labelledby="offcanvasNavbarLabel"
+            data-bs-scroll="true" style="width: 10%;" >
             <div class="offcanvas-header">
                 <h5 class="offcanvas-title" id="offcanvasNavbarLabel">Menù</h5>
                 <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
             </div>
             <div class="offcanvas-body d-flex flex-column">
-                <ul class="navbar-nav alin-items-start flex-grow-1 pe-3">
+                <ul class="navbar-nav alin-items-start flex-grow-1 pe-3 text-white">
                     <li class="nav-item">
                         <a class="nav-link" aria-current="page" href="/">Lista ticket</a>
                     </li>

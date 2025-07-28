@@ -8,6 +8,7 @@ import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.Lob;
 import jakarta.persistence.ManyToMany;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
@@ -36,11 +37,17 @@ public class User {
     @NotBlank
     private String state;
 
+    @Lob
+    private String imgUrl;
+
     @ManyToMany(fetch = FetchType.EAGER)
     private Set<Role> roles;
 
     @OneToMany(mappedBy = "user")
     private List<Ticket> tickets;
+
+    @OneToMany(mappedBy = "user")
+    private List<Note> notes;
 
 
     // Getters and Setters
@@ -93,6 +100,16 @@ public class User {
         this.state = state;
     }
 
+
+    public String getImgUrl() {
+        return this.imgUrl;
+    }
+
+    public void setImgUrl(String imgUrl) {
+        this.imgUrl = imgUrl;
+    }
+
+
     //Getters and Setters ManyToMany
 
     public Set<Role> getRoles() {
@@ -112,6 +129,16 @@ public class User {
     public void setTickets(List<Ticket> tickets) {
         this.tickets = tickets;
     }
+
+
+    public List<Note> getNotes() {
+        return this.notes;
+    }
+
+    public void setNotes(List<Note> notes) {
+        this.notes = notes;
+    }
+
 
     
 

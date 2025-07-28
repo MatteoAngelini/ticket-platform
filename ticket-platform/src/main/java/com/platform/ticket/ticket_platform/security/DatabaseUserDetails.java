@@ -19,6 +19,7 @@ public class DatabaseUserDetails implements UserDetails {
     private final String name;
     private final String surname;
     private final String state;
+    private final String imgUrl;
     private final Set<GrantedAuthority> authorities;
 
     public DatabaseUserDetails(User user) {
@@ -28,6 +29,7 @@ public class DatabaseUserDetails implements UserDetails {
         this.name = user.getName();
         this.surname = user.getSurname();
         this.state = user.getState();
+        this.imgUrl = user.getImgUrl();
         authorities = new HashSet<GrantedAuthority>();
         for (Role role : user.getRoles()) {
             authorities.add(new SimpleGrantedAuthority(role.getName()));
@@ -63,5 +65,9 @@ public class DatabaseUserDetails implements UserDetails {
 
     public String getState(){
         return this.state;
+    }
+
+    public String getImgUrl(){
+        return this.imgUrl;
     }
 }

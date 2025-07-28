@@ -3,6 +3,9 @@ package com.platform.ticket.ticket_platform.model;
 import java.time.LocalDateTime;
 import java.util.List;
 
+import org.springframework.format.annotation.DateTimeFormat;
+
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -11,7 +14,6 @@ import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
-import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotEmpty;
 
 @Entity
@@ -22,30 +24,31 @@ public class Ticket {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer Id;
 
-    @NotBlank
+    @NotEmpty(message = "L'oggetto non può essere vuoto")
     private String title;
 
-    @NotBlank
+    @NotEmpty(message = "La descrizione non può essere vuota")
     private String description;
 
-    @NotBlank
+    @NotEmpty(message = "Seleziona uno stato")
     private String state;
 
-    @NotEmpty
-    private LocalDateTime creation_date;
 
-    @NotEmpty
-    private LocalDateTime update_date;
+    @DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm")
+    private LocalDateTime creationDate;
+
+    @DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm")
+    private LocalDateTime updateDate;
 
     @ManyToOne
-    @JoinColumn(name = "category_id" , nullable = false)
+    @JoinColumn(name = "category_id" , nullable = true)
     private Category category;
 
     @ManyToOne
-    @JoinColumn(name = "user_id" , nullable = false)
+    @JoinColumn(name = "user_id" , nullable = true)
     private User user;
 
-    @OneToMany(mappedBy = "ticket")
+    @OneToMany(mappedBy = "ticket", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Note> notes;
 
     //Getters and Setters
@@ -83,20 +86,20 @@ public class Ticket {
         this.state = state;
     }
 
-    public LocalDateTime getCreation_date() {
-        return this.creation_date;
+    public LocalDateTime getCreationDate() {
+        return this.creationDate;
     }
 
-    public void setCreation_date(LocalDateTime creation_date) {
-        this.creation_date = creation_date;
+    public void setCreationDate(LocalDateTime creationDate) {
+        this.creationDate = creationDate;
     }
 
-    public LocalDateTime getUpdate_date() {
-        return this.update_date;
+    public LocalDateTime getUpdateDate() {
+        return this.updateDate;
     }
 
-    public void setUpdate_date(LocalDateTime update_date) {
-        this.update_date = update_date;
+    public void setUpdateDate(LocalDateTime updateDate) {
+        this.updateDate = updateDate;
     }
 
     //Getters and Setters ManyToOne

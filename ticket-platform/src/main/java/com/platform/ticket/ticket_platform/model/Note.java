@@ -2,6 +2,8 @@ package com.platform.ticket.ticket_platform.model;
 
 import java.time.LocalDateTime;
 
+import org.springframework.format.annotation.DateTimeFormat;
+
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -10,7 +12,6 @@ import jakarta.persistence.JoinColumn;
 import jakarta.persistence.Lob;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
-import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotEmpty;
 
 @Entity
@@ -22,15 +23,19 @@ public class Note {
     private Integer Id;
 
     @Lob
-    @NotBlank
+    @NotEmpty
     private String description;
 
-    @NotEmpty
-    private LocalDateTime creation_date;
+    @DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm")
+    private LocalDateTime creationDate;
 
     @ManyToOne
     @JoinColumn(name = "ticket_id" , nullable = false)
     private Ticket ticket;
+
+    @ManyToOne
+    @JoinColumn(name = "user_id" , nullable = false)
+    private User user;
 
     //Getters and Setters
 
@@ -51,12 +56,12 @@ public class Note {
         this.description = description;
     }
 
-    public LocalDateTime getCreation_date() {
-        return this.creation_date;
+    public LocalDateTime getCreationDate() {
+        return this.creationDate;
     }
 
-    public void setCreation_date(LocalDateTime creation_date) {
-        this.creation_date = creation_date;
+    public void setCreationDate(LocalDateTime creationDate) {
+        this.creationDate = creationDate;
     }
 
     //Getters and Setters ManyToOne
@@ -68,5 +73,15 @@ public class Note {
     public void setTicket(Ticket ticket) {
         this.ticket = ticket;
     }
+
+
+    public User getUser() {
+        return this.user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
+    }
+
 
 }

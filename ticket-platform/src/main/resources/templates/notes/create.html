@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard</title>
+
+
+    <link th:rel="stylesheet" th:href="@{/webjars/bootstrap/5.3.7/css/bootstrap.min.css}" />
+    <link rel="stylesheet" th:href="@{https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css}">
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+
+</head>
+
+<body>
+
+    <header th:replace="/fragments/navbar :: navbar-offcanvas"></header>
+
+    <main class="main-content">
+
+        <div class="container p-0">
+            <h1 class="mb-5">Lista Ticket</h1>
+            <div class="row align-items-start">
+                <form th:action="@{/notes/create/{ticketId}(ticketId=${ticket.id})}" method="post" id="note-form"
+                    th:object="${note}">
+
+
+
+                    <div class="col-lg-8">
+
+                        <h4 class="mb-3">Informazioni generali</h4>
+
+
+                        <label class="form-label">Ticket</label>
+                        <input type="text" class="form-control mb-3" th:value="${ticket.title}" readonly />
+
+
+                        <label for="creationDate" class="form-label">Data di creazione</label>
+                        <input type="datetime-local" id="creationDate" th:field="*{creationDate}"
+                            class="form-control mb-3" th:errorClass="is-invalid">
+                        <div th:if="${#fields.hasErrors('creationDate')}" class="invalid-feedback">
+                            <ul>
+                                <li th:each="err : ${#fields.errors('creationDate')}" th:text="${err}"></li>
+                            </ul>
+                        </div>
+
+
+                        <label for="userId" class="form-label">Autore</label>
+                        <select id="userId" th:field="*{user.id}" class="form-select mb-3" th:errorClass="is-invalid">
+                            <option value="">Seleziona un autore</option>
+                            <option th:value="${user.id}" th:each="user : ${users}"
+                                th:text="${user.name + ' ' + user.surname}">
+                            </option>
+                        </select>
+                        <div th:if="${#fields.hasErrors('user.id')}" class="invalid-feedback">
+                            <ul>
+                                <li th:each="err : ${#fields.errors('user.id')}" th:text="${err}"></li>
+                            </ul>
+                        </div>
+
+
+
+
+                        <h4 class="mb-3">Messaggio</h4>
+
+
+                        <label for="description" class="form-label">Descrizione</label>
+                        <div class="form-floating">
+                            <textarea type="text" id="description" th:field="*{description}" class="form-control mb-3"
+                                th:errorClass="is-invalid" style="height: 200px;"></textarea>
+                            <label for="description">Descrizione</label>
+                            <div th:if="${#fields.hasErrors('description')}" class="invalid-feedback">
+                                <ul>
+                                    <li th:each="err : ${#fields.errors('description')}" th:text="${err}"></li>
+                                </ul>
+                            </div>
+                        </div>
+
+                        <div class="mb-5">
+                            <button type="submit" class="btn btn-primary">Crea</button>
+                        </div>
+
+                    </div>
+
+
+                </form>
+            </div>
+    </main>
+
+    <footer th:replace="/fragments/footer :: footer"></footer>
+</body>
+
+</html>

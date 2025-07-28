@@ -20,14 +20,10 @@
     <main class="main-content">
 
         <div class="container">
-            <div class="row">
-                <div class="col-12 mb-2">
-                    <h1 class="mb-4">Lista Ticket</h1>
-                    <p>Di seguito sono riportati tutti i ticket relativi al tuo account: puoi effettuare
-                        una ricerca e
-                        cliccare sul ticket per accedere al dettaglio</p>
-                </div>
-            </div>
+            <h1 class="mb-4">Lista Ticket</h1>
+            <p>Di seguito sono riportati tutti i ticket relativi al tuo account: puoi effettuare
+                una ricerca e
+                cliccare sul ticket per accedere al dettaglio</p>
             <div class="row">
                 <div class="col-6">
                     <form th:action="@{/}" method="get">
@@ -35,14 +31,16 @@
                             <input type="search" class="form-control" placeholder="Digita titolo ticket per ricercare"
                                 aria-label="Digita titolo ticket per ricercare" aria-describedby="button-addon2"
                                 name="keyword" th:value="${keyword}">
-                            <button class="btn btn-outline-secondary" type="submit" id="button-addon2"><i
+                            <button class="btn bg-primary-subtle" type="submit" id="button-addon2"><i
                                     class="bi bi-search"></i></button>
                         </div>
                     </form>
                 </div>
             </div>
-        </div>
-        <div class="container">
+            <div class="mb-3 p-0">
+                <a type="button" class="btn btn-primary" th:href="@{/tickets/create}"><i class="bi bi-plus-square"></i>
+                    Crea</a>
+            </div>
             <div class="row align-items-center">
                 <div class="col-12">
                     <div class="table-responsive" th:if="${tickets != null and !tickets.isEmpty()}">
@@ -55,27 +53,55 @@
                                     <th scope="col">Categoria</th>
                                     <th scope="col">Ultimo aggiornamento</th>
                                     <th scope="col">Stato</th>
+                                    <th scope="col">Azioni</th>
                                 </tr>
                             </thead>
                             <tbody class="table-group-divider">
-                                <tr th:each="ticket : ${tickets}">
+                                <tr th:each="ticket : ${tickets}" class="align-middle">
+                                    <td>[[*{ticket.id}]]</td>
+                                    <td>[[*{ticket.user.name}]] [[*{ticket.user.surname}]]</td>
+                                    <td><a th:href="@{/tickets/{id}(id=${ticket.id})}"
+                                            class="text-decoration-none text-primary">[[*{ticket.title}]]</a></td>
+                                    <td>[[*{ticket.category.name}]]</td>
+                                    <td>[[${#temporals.format(ticket.updateDate, 'dd/MM/yyyy' + ' - ' + 'HH:mm')}]]</td>
+                                    <td th:switch="*{ticket.state}">
+                                        <span th:case="'Da fare'" class="badge bg-primary">Da fare</span>
+                                        <span th:case="'In corso'" class="badge bg-warning text-dark">In corso</span>
+                                        <span th:case="'Completato'" class="badge bg-success">Completato</span>
+                                    </td>
                                     <td>
+                                        <a type="button" th:href="@{/tickets/edit/{id}(id=${ticket.id})}"
+                                            class="btn btn-sm btn-outline-primary"><i class="bi bi-pencil-fill"></i></a>
+                                        <button type="button" class="btn btn-sm btn-outline-primary"
+                                            data-bs-toggle="modal" data-bs-target="#deleteModal">
+                                            <i class="bi bi-trash-fill"></i>
+                                        </button>
 
-                                    </td>
-                                    <td>
-                                        
-                                    </td>
-                                    <td>
-                                        
-                                    </td>
-                                    <td>
-                                        
-                                    </td>
-                                    <td>
-                                        
-                                    </td>
-                                    <td>
-                                        
+                                        <div class="modal fade" id="deleteModal" tabindex="-1"
+                                            aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                            <div class="modal-dialog modal-dialog-centered">
+                                                <div class="modal-content" th:object="${ticket}">
+                                                    <div class="modal-header">
+                                                        <h1 class="modal-title fs-5" id="exampleModalLabel">Eliminazione
+                                                            del ticket #[[*{id}]] - [[*{title}]]</h1>
+                                                        <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                                            aria-label="Close"></button>
+                                                    </div>
+                                                    <div class="modal-body">
+                                                        Sei sicuro di voler eliminare il ticket con id: [[*{id}]] ?
+                                                    </div>
+                                                    <div class="modal-footer justify-content-between">
+                                                        <form th:action="@{'/tickets/delete/{id}'(id=${ticket.id})}"
+                                                            method="post">
+                                                            <button type="submit"
+                                                                class="btn btn-danger">Elimina</button>
+                                                        </form>
+                                                        <button type="button" class="btn btn-secondary"
+                                                            data-bs-dismiss="modal">Chiudi</button>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
                                     </td>
                                 </tr>
                             </tbody>
@@ -87,6 +113,7 @@
                 </div>
             </div>
         </div>
+
 
 
 

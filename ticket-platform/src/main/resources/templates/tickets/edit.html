@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard</title>
+
+
+    <link th:rel="stylesheet" th:href="@{/webjars/bootstrap/5.3.7/css/bootstrap.min.css}" />
+    <link rel="stylesheet" th:href="@{https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css}">
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+
+</head>
+
+<body>
+
+    <header th:replace="/fragments/navbar :: navbar-offcanvas"></header>
+
+    <main class="main-content">
+
+        <div class="container p-0">
+            <h1 class="mb-5">Lista Ticket</h1>
+            <div class="row align-items-start">
+                <form th:action="@{/tickets/edit/{id}(id=${ticket.id})}" method="post" id="ticket-form" th:object="${ticket}">
+
+                    <h4 class="mb-3">Informazioni generali</h4>
+                    
+
+                    <div class="col-lg-8">
+
+                        <label for="creationDate" class="form-label">Data di creazione</label>
+                        <input type="datetime-local" id="creationDate" th:field="*{creationDate}" class="form-control mb-3"
+                            th:errorClass="is-invalid" readonly disabled>
+                        <div th:if="${#fields.hasErrors('creationDate')}" class="invalid-feedback">
+                            <ul>
+                                <li th:each="err : ${#fields.errors('creationDate')}" th:text="${err}"></li>
+                            </ul>
+                        </div>
+
+
+                        <label for="userId" class="form-label">Assegnato a</label>
+                        <select id="userId" th:field="*{user.id}" class="form-select mb-3" th:errorClass="is-invalid">
+                            <option value="">Seleziona un operatore</option>
+                            <option th:value="${operator.id}" th:each="operator : ${operators}"
+                                th:text="${operator.name + ' ' + operator.surname}">
+                            </option>
+                        </select>
+                        <div th:if="${#fields.hasErrors('user.id')}" class="invalid-feedback">
+                            <ul>
+                                <li th:each="err : ${#fields.errors('user.id')}" th:text="${err}"></li>
+                            </ul>
+                        </div>
+
+                        <label for="categoryId" class="form-label">Categoria</label>
+                        <div th:each="category : ${categories}" class="form-check mb-2">
+                            <input class="form-check-input" type="radio" id="categoryId" th:value="${category.id}"
+                                th:field="*{category.id}" th:errorClass="is-invalid">
+                            <label class="form-check-label" for="categoryId" th:text="${category.name}">
+                            </label>
+                        </div>
+                        <div th:if="${#fields.hasErrors('category.id')}" class="invalid-feedback">
+                            <ul>
+                                <li th:each="err : ${#fields.errors('category.id')}" th:text="${err}"></li>
+                            </ul>
+                        </div>
+
+                        <label for="state" class="form-label">Stato</label>
+                        <select id="state" th:field="*{state}" class="form-select mb-5" th:errorClass="is-invalid">
+                            <option value="">Seleziona uno stato</option>
+                            <option value="Da fare">Da fare</option>
+                            <option value="In corso">In corso</option>
+                            <option value="Completato">Completato</option>
+                        </select>
+                        <div th:if="${#fields.hasErrors('state')}" class="invalid-feedback">
+                            <ul>
+                                <li th:each="err : ${#fields.errors('state')}" th:text="${err}"></li>
+                            </ul>
+                        </div>
+
+                        <h4 class="mb-3">Messaggio</h4>
+
+                        <label for="title" class="form-label">Oggetto</label>
+                        <input type="text" id="title" th:field="*{title}" class="form-control mb-3"
+                            th:errorClass="is-invalid">
+                        <div th:if="${#fields.hasErrors('title')}" class="invalid-feedback">
+                            <ul>
+                                <li th:each="err : ${#fields.errors('title')}" th:text="${err}"></li>
+                            </ul>
+                        </div>
+
+                        <label for="description" class="form-label">Descrizione</label>
+                        <div class="form-floating">
+                            <textarea type="text" id="description" th:field="*{description}" class="form-control mb-3"
+                                th:errorClass="is-invalid" style="height: 200px;"></textarea>
+                            <label for="description">Descrizione</label>
+                            <div th:if="${#fields.hasErrors('description')}" class="invalid-feedback">
+                                <ul>
+                                    <li th:each="err : ${#fields.errors('description')}" th:text="${err}"></li>
+                                </ul>
+                            </div>
+                        </div>
+
+                        <div class="mb-5">
+                            <button type="submit" class="btn btn-primary">Aggiorna</button>
+                        </div>
+
+                    </div>
+
+
+                </form>
+            </div>
+    </main>
+
+    <footer th:replace="/fragments/footer :: footer"></footer>
+</body>
+
+</html>
