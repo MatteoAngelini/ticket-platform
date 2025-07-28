@@ -33,7 +33,7 @@ public class DashboardController {
         }else{
             tickets = ticketRepository.findAll();
         }
-
+        
         model.addAttribute("tickets", tickets);
         model.addAttribute("keyword", keyword);
 

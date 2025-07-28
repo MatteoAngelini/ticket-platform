@@ -23,10 +23,9 @@ public class SecurityConfiguration {
     SecurityFilterChain filterChain(HttpSecurity http)
             throws Exception {
         http.authorizeHttpRequests(requests -> requests
-                .requestMatchers("/operatori").hasAuthority("Operatore")
-                .requestMatchers("/admin").hasAuthority("Admin")
+                .requestMatchers("/operators/**").hasAuthority("Operatore")
                 .requestMatchers("/").permitAll()
-                .requestMatchers("/**").permitAll())
+                .requestMatchers("/css/**","/img/**","/js/**","/webjars/**").permitAll())
                 .formLogin(Customizer.withDefaults());
         return http.build();
     }

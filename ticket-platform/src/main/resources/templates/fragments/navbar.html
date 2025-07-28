@@ -1,4 +1,5 @@
-<nav class="navbar fixed-top mb-5" th:fragment="navbar-offcanvas" style="background-color: #e3f2fd;" data-bs-theme="light">
+<nav class="navbar fixed-top mb-5" th:fragment="navbar-offcanvas" style="background-color: #e3f2fd;"
+    data-bs-theme="light">
     <div class="container-fluid">
         <div class="d-flex justify-content-between">
             <button class="navbar-toggler" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasNavbar"
@@ -8,9 +9,70 @@
         </div>
         <div>
             <a class="navbar-brand" th:href="@{/}">Help Desk</a>
+            <div th:if="${#authorization.expression('isAuthenticated()')}"
+                class="btn-group text-center d-inline align-items-center">
+                <button class="btn dropdown-toggle-icon" type="button" data-bs-toggle="dropdown" aria-expanded="false"
+                    style="border: none;" th:switch="${#authentication.principal.name}">
+                    <img th:case="''" width="50" height="50"
+                        th:src="@{https://img.icons8.com/material/48/0070c0/user-male-circle--v1.png}"
+                        alt="user-male-circle--v1" />
+                    <img th:case="'Nicole'" th:src="@{/img/nicole.jpg}" alt="Nicole"
+                        style="width: 50px; height: 50px; object-fit: cover;" class="img-fluid rounded-circle">
+                    <img th:case="'Alessia'" th:src="@{/img/alessia.jpg}" alt="alessia"
+                        style="width: 50px; height: 50px; object-fit: cover;" class="img-fluid rounded-circle">
+                    <img th:case="'Angela'" th:src="@{/img/angela.jpg}" alt="Angela"
+                        style="width: 50px; height: 50px; object-fit: cover;" class="img-fluid rounded-circle">
+                    <img th:case="'Marco'" th:src="@{/img/marco.jpg}" alt="Marco"
+                        style="width: 50px; height: 50px; object-fit: cover;" class="img-fluid rounded-circle">
+                    <img th:case="'Matteo'" th:src="@{/img/matteo.jpg}" alt="Matteo"
+                        style="width: 50px; height: 50px; object-fit: cover;" class="img-fluid rounded-circle">
+                </button>
+                <ul class="dropdown-menu dropdown-menu-end" >
+                    <li class="d-flex justify-content-start mx-4 align-items-center" style="width: 220px;" th:switch="${#authentication.principal.name}">  
+
+                        <img th:case="''" width="40px" height="40px"
+                            th:src="@{https://img.icons8.com/material/30/0070c0/user-male-circle--v1.png}" alt="user" />
+                        <img th:case="'Nicole'" th:src="@{/img/nicole.jpg}" alt="Nicole"
+                            style="width: 40px; height: 40px; object-fit: cover;" class="img-fluid rounded-circle">
+                        <img th:case="'Alessia'" th:src="@{/img/alessia.jpg}" alt="alessia"
+                            style="width: 40px; height: 40px; object-fit: cover;" class="img-fluid rounded-circle">
+                        <img th:case="'Angela'" th:src="@{/img/angela.jpg}" alt="Angela"
+                            style="width:40px; height: 40px; object-fit: cover;" class="img-fluid rounded-circle">
+                        <img th:case="'Marco'" th:src="@{/img/marco.jpg}" alt="Marco"
+                            style="width: 40px; height: 40px; object-fit: cover;" class="img-fluid rounded-circle">
+                        <img th:case="'Matteo'" th:src="@{/img/matteo.jpg}" alt="Matteo"
+                            style="width: 40px; height: 40px; object-fit: cover;" class="img-fluid rounded-circle">
+
+                        <div class="ps-2 d-flex flex-column dropdown-header">
+                            <span class="fw-bold"
+                                th:text="${#authentication.principal.name + ' ' + #authentication.principal.surname}"></span>
+                            <span th:text="${#authentication.principal.state}"></span>
+                        </div>
+                    </li>
+                    <li class="m-2 text-secondary">
+                        <strong class="text-secondary">Ruolo</strong>
+                        <span th:text="${#strings.listJoin(#authentication.authorities, ', ')}"></span>
+                    </li>
+
+                    <li>
+                        <hr class="dropdown-divider">
+                    </li>
+
+                    <li class="d-flex justify-content-start m-2">
+                        <span><a th:href="@{/logout}" class="btn btn-sm btn-danger">Esci</a></span>
+                    </li>
+                </ul>
+
+            </div>
+            <!-- SE NON LOGGATO -->
+            <div th:unless="${#authorization.expression('isAuthenticated()')}" class="text-center d-inline">
+                <span>
+                    <a th:href="@{/login}" class="btn btn-primary" style="padding: 5px 10px;">Accedi</a>
+                </span>
+            </div>
         </div>
-        <div class="offcanvas offcanvas-start bg-primary text-white" tabindex="-1" id="offcanvasNavbar" aria-labelledby="offcanvasNavbarLabel"
-            data-bs-scroll="true" style="width: 10%;" >
+        <div class="offcanvas offcanvas-start bg-primary text-white" tabindex="-1" id="offcanvasNavbar"
+            aria-labelledby="offcanvasNavbarLabel" data-bs-scroll="true" style="width: 10%;">
             <div class="offcanvas-header">
                 <h5 class="offcanvas-title" id="offcanvasNavbarLabel">Menù</h5>
                 <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
@@ -21,26 +83,9 @@
                         <a class="nav-link" aria-current="page" href="/">Lista ticket</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" aria-current="page" href="/">Impostazioni</a>
+                        <a class="nav-link" aria-current="page" th:href="@{/operators}">Impostazioni</a>
                     </li>
                 </ul>
-                <div class="btn-group dropup d-flex align-items-end">
-
-                    <a class="dropdown-toggle text-decoration-none" data-bs-toggle="dropdown" aria-expanded="false" data-bs-boundary="viewport">
-                        <img th:src="@{/img/icon.png}" alt="" style="width: 60px;">
-                    </a>
-                    <ul class="dropdown-menu">
-                        <li><h4 class="dropdown-header">Utente</h4></li>
-                        <li class="dropdown-item">Ruolo:</li>
-                        <li class="dropdown-item">Stato:</li>
-                        <li><hr class="dropdown-divider"></li>
-                        <li class="dropdown-item d-flex justify-content-between">
-                            <button class="btn btn-sm btn-primary me-2">Accedi</button>
-                            <button class="btn btn-sm btn-warning">Modifica Stato</button>
-                        </li>
-                        
-                    </ul>
-                </div>
             </div>
         </div>
     </div>
