@@ -40,7 +40,7 @@
 
 
                         <label for="userId" class="form-label">Assegnato a</label>
-                        <select id="userId" th:field="*{user.id}" class="form-select mb-3" th:errorClass="is-invalid">
+                        <select id="userId" th:field="*{user.id}" class="form-select mb-3" th:errorClass="is-invalid" required>
                             <option value="">Seleziona un operatore</option>
                             <option th:value="${operator.id}" th:each="operator : ${operators}"
                                 th:text="${operator.name + ' ' + operator.surname}">
@@ -55,7 +55,7 @@
                         <label for="categoryId" class="form-label">Categoria</label>
                         <div th:each="category : ${categories}" class="form-check mb-2">
                             <input class="form-check-input" type="radio" id="categoryId" th:value="${category.id}"
-                                th:field="*{category.id}" th:errorClass="is-invalid">
+                                th:field="*{category.id}" th:errorClass="is-invalid" required>
                             <label class="form-check-label" for="categoryId" th:text="${category.name}">
                             </label>
                         </div>
@@ -66,7 +66,7 @@
                         </div>
 
                         <label for="state" class="form-label">Stato</label>
-                        <select id="state" th:field="*{state}" class="form-select mb-5" th:errorClass="is-invalid">
+                        <select id="state" th:field="*{state}" class="form-select mb-3" th:errorClass="is-invalid">
                             <option value="">Seleziona uno stato</option>
                             <option value="Da fare">Da fare</option>
                             <option value="In corso">In corso</option>

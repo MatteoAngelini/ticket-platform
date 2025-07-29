@@ -54,7 +54,7 @@ public class TicketController {
     @GetMapping("/create")
     public String create(Model model) {
 
-        List<User> operators = userRepository.findByRoles_Name("Operatore");
+        List<User> operators = userRepository.findByRoleAnState("Operatore", "Disponibile");
 
         Ticket ticket = new Ticket();
 
@@ -72,7 +72,7 @@ public class TicketController {
     @PostMapping("/create")
     public String store(@Valid @ModelAttribute("ticket") Ticket formTicket, BindingResult bindingResult, Model model) {
 
-        List<User> operators = userRepository.findByRoles_Name("Operatore");
+        List<User> operators = userRepository.findByRoleAnState("Operatore", "Disponibile");
 
         if (bindingResult.hasErrors()) {
             model.addAttribute("categories", categoryRepository.findAll());
@@ -91,7 +91,7 @@ public class TicketController {
     @GetMapping("/edit/{id}")
     public String edit(@PathVariable("id") Integer id, Model model) {
 
-        List<User> operators = userRepository.findByRoles_Name("Operatore");
+        List<User> operators = userRepository.findByRoleAnState("Operatore", "Disponibile");
 
         Optional<Ticket> ticket = ticketRepository.findById(id);
 
@@ -107,7 +107,7 @@ public class TicketController {
     public String update(@PathVariable("id") Integer id, @Valid @ModelAttribute("ticket") Ticket formTicket,
             BindingResult bindingResult, Model model) {
 
-        List<User> operators = userRepository.findByRoles_Name("Operatore");
+        List<User> operators = userRepository.findByRoleAnState("Operatore", "Disponibile");
 
         if (bindingResult.hasErrors()) {
             model.addAttribute("categories", categoryRepository.findAll());

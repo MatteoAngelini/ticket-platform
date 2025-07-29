@@ -67,6 +67,23 @@
                     class="bi bi-pencil-square"></i>
                 Modifica Profilo</a>
             <h4 class="mb-3">Ticket assegnati</h2>
+                <p>Di seguito sono riportati tutti i ticket relativi al tuo account: puoi effettuare
+                    una ricerca e
+                    cliccare sul ticket per accedere al dettaglio</p>
+                <div class="row">
+                    <div class="col-6">
+                        <form th:action="@{/operators}" method="get">
+                            <div class="input-group mb-3">
+                                <input type="search" class="form-control"
+                                    placeholder="Digita titolo ticket per ricercare"
+                                    aria-label="Digita titolo ticket per ricercare" aria-describedby="button-addon2"
+                                    name="keyword" th:value="${keyword}">
+                                <button class="btn bg-primary-subtle" type="submit" id="button-addon2"><i
+                                        class="bi bi-search"></i></button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
                 <div class="row">
                     <div class="col-6">
                         <nav aria-label="...">
