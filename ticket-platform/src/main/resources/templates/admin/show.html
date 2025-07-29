@@ -15,7 +15,7 @@
 
 <body>
 
-    <header th:replace="/fragments/navbar :: navbar-offcanvas"></header>
+    <header th:replace="/fragments/navbar :: navbar"></header>
 
     <main class="main-content">
 
@@ -26,7 +26,7 @@
                 cliccare sul ticket per accedere al dettaglio</p>
             <div class="row">
                 <div class="col-6">
-                    <form th:action="@{/}" method="get">
+                    <form th:action="@{/admin}" method="get">
                         <div class="input-group mb-3">
                             <input type="search" class="form-control" placeholder="Digita titolo ticket per ricercare"
                                 aria-label="Digita titolo ticket per ricercare" aria-describedby="button-addon2"
@@ -35,6 +35,29 @@
                                     class="bi bi-search"></i></button>
                         </div>
                     </form>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-6">
+                    <nav aria-label="...">
+                        <ul class="pagination pagination-sm justify-content-start">
+                            <li class="page-item " th:classappend="${currentPage == 0} ? 'disabled'">
+                                <a class="page-link"
+                                    th:href="@{/admin(page=${currentPage - 1}, keyword=${keyword})}">&laquo;</a>
+                            </li>
+
+                            <li class="page-item" th:each="i : ${#numbers.sequence(0, totalPages - 1)}"
+                                th:classappend="${i == currentPage} ? 'active'">
+                                <a class="page-link" th:href="@{/admin(page=${i}, keyword=${keyword})}"
+                                    th:text="${i + 1}">1</a>
+                            </li>
+
+                            <li class="page-item" th:classappend="${currentPage + 1 == totalPages} ? 'disabled'">
+                                <a class="page-link"
+                                    th:href="@{/admin(page=${currentPage + 1}, keyword=${keyword})}">&raquo;</a>
+                            </li>
+                        </ul>
+                    </nav>
                 </div>
             </div>
             <div class="mb-3 p-0">

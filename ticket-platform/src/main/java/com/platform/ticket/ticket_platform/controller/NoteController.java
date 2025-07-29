@@ -29,13 +29,13 @@ import org.springframework.web.bind.annotation.PostMapping;
 public class NoteController {
 
     @Autowired
-    NoteRepository noteRepository;
+    private NoteRepository noteRepository;
 
     @Autowired
-    TicketRepository ticketRepository;
+    private TicketRepository ticketRepository;
 
     @Autowired
-    UserRepository userRepository;
+    private UserRepository userRepository;
 
     @GetMapping("/create/{ticketId}")
     public String create(@PathVariable("ticketId") Integer ticketId, Model model) {

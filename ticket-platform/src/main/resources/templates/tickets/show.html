@@ -15,14 +15,14 @@
 
 <body>
 
-    <header th:replace="/fragments/navbar :: navbar-offcanvas"></header>
+    <header th:replace="/fragments/navbar :: navbar"></header>
 
     <main class="main-content">
 
         <div class="container p-0">
             <h1 class="mb-5">Lista Ticket</h1>
             <div class="row align-items-center px-2" th:object="${ticket}">
-                <div class="card mb-3">
+                <div class="card mb-3 shadow">
                     <div class="card-body p-0">
                         <h4 class="card-title p-0 pt-3">
                             #[[*{id}]] - [[*{title}]]
@@ -67,6 +67,7 @@
             <div class="mb-3 p-0">
                 <a type="button" th:href="@{/notes/create/{ticketId}(ticketId=${ticket.id})}" class="btn btn-primary"><i
                         class="bi bi-pencil-square"></i> Commenta</a>
+                <a type="button" th:href="@{/}" class="btn btn-secondary"> Indietro</a>
             </div>
             <div th:each="note : ${ticket.notes}"
                 th:if="${notes != null and !notes.isEmpty()}" style="height: 200px;" th:class="${#lists.contains(note.user.roles.?[name == 'Admin'], note.user.roles[0])} ? 'card mb-3 bg-primary-subtle' : 'card mb-3 bg-body-tertiary'">

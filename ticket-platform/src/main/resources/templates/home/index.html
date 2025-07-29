@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard</title>
+
+
+    <link th:rel="stylesheet" th:href="@{/webjars/bootstrap/5.3.7/css/bootstrap.min.css}" />
+    <link rel="stylesheet" th:href="@{https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css}">
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+
+</head>
+
+<body>
+
+    <header th:replace="/fragments/navbar :: navbar"></header>
+
+    <main class="main-content">
+
+        <div class="container">
+            <h1 class="mb-4">Benvenuto</h1>
+            <p>Gestisci i tuoi ticket nell'area personale</p>
+            <div class="row">
+                <div class="col">
+                    <div class="card bg-primary shadow slide-in-left">
+                        <div class="card-body text-center text-light">
+                            <h2 class="card-title" th:text="${ticketCount}"></h2>
+                            <p class="fs-3"><i class="bi bi-ticket-perforated"></i> Tickets</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col">
+                    <div class="card bg-primary shadow slide-in-left">
+                        <div class="card-body text-center text-light">
+                            <h2 class="card-title" th:text="${noteCount}"></h2>
+                            <p class="fs-3"><i class="bi bi-card-list"></i> Note</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+        </div>
+
+    </main>
+
+
+
+    <footer th:replace="/fragments/footer :: footer"></footer>
+</body>
+
+</html>
