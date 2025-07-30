@@ -10,10 +10,10 @@
                 <li class="nav-item d-flex align-items-center">
                     <a class="nav-link " th:href="@{/}">Home</a>
                 </li>
-                <li class="nav-item d-flex align-items-center">
+                <li class="nav-item d-flex align-items-center" sec:authorize="hasAuthority('Admin')">
                     <a class="nav-link " th:href="@{/admin}">Dashboard</a>
                 </li>
-                <li class="nav-item  d-flex align-items-center">
+                <li class="nav-item  d-flex align-items-center" sec:authorize="hasAuthority('Operatore')">
                     <a class="nav-link " th:href="@{/operators}">Pagina personale</a>
                 </li>
                 <li class="nav-item dropdown d-flex align-items-center">

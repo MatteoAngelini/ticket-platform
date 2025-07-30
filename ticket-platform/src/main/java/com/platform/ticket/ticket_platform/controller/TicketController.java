@@ -5,6 +5,8 @@ import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -105,19 +107,30 @@ public class TicketController {
 
     @PostMapping("/edit/{id}")
     public String update(@PathVariable("id") Integer id, @Valid @ModelAttribute("ticket") Ticket formTicket,
-            BindingResult bindingResult, Model model) {
+            BindingResult bindingResult, Model model, Authentication authentication) {
 
-        List<User> operators = userRepository.findByRoleAnState("Operatore", "Disponibile");
+        UserDetails userDetails = (UserDetails) authentication.getPrincipal();
+        boolean isOperator = userDetails.getAuthorities().stream()
+                .anyMatch(auth -> auth.getAuthority().equals("Operatore"));
+
+        Ticket ticketId = ticketRepository.findById(id).orElseThrow();
+
+        if (isOperator) {
+            ticketId.setState(formTicket.getState());
+            ticketId.setUpdateDate(LocalDateTime.now());
+            ticketRepository.save(ticketId);
+            return "redirect:/operators";
+        }
 
         if (bindingResult.hasErrors()) {
             model.addAttribute("categories", categoryRepository.findAll());
             model.addAttribute("user", userRepository.findAll());
-            model.addAttribute("operators", operators);
+            model.addAttribute("operators", userRepository.findByRoleAnState("Operatore", "Disponibile"));
 
-            return "/tickets/create";
+            return "/tickets/edit";
         }
 
-        Ticket ticketId = ticketRepository.findById(id).orElseThrow();
+        
         ticketId.setTitle(formTicket.getTitle());
         ticketId.setDescription(formTicket.getDescription());
         ticketId.setCategory(formTicket.getCategory());

@@ -22,11 +22,21 @@ public class SecurityConfiguration {
     SecurityFilterChain filterChain(HttpSecurity http)
             throws Exception {
         http.authorizeHttpRequests(requests -> requests
+                //Accessi riservati
                 .requestMatchers("/operators/**").hasAuthority("Operatore")
                 .requestMatchers("/admin/**").hasAuthority("Admin")
-                .requestMatchers("/**").permitAll()
+                .requestMatchers("/tickets/create" , "/tickets/delete/**").hasAuthority("Admin")
+
+                //Accessi condivisi
+                .requestMatchers("/notes/**").hasAnyAuthority("Admin", "Operatore")
+                .requestMatchers("/tickets/edit/**").hasAnyAuthority("Admin", "Operatore")
+
+                //Accessi pubblici
                 .requestMatchers("/login","/css/**","/img/**","/js/**","/webjars/**").permitAll()
                 .anyRequest().permitAll()
+                )
+                .exceptionHandling(exception -> exception
+                    .accessDeniedPage("/error/403")
                 )
                 .formLogin(form -> form
                     .loginPage("/login")

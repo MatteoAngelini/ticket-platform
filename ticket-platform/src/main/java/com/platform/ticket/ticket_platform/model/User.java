@@ -3,6 +3,8 @@ package com.platform.ticket.ticket_platform.model;
 import java.util.List;
 import java.util.Set;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
@@ -25,6 +27,7 @@ public class User {
     private String email;
 
     @NotBlank
+    @JsonIgnore
     private String password;
 
     @NotBlank
@@ -40,9 +43,11 @@ public class User {
     private Set<Role> roles;
 
     @OneToMany(mappedBy = "user")
+    @JsonIgnore
     private List<Ticket> tickets;
 
     @OneToMany(mappedBy = "user")
+    @JsonIgnore
     private List<Note> notes;
 
 
