@@ -60,9 +60,18 @@
                             </ul>
                         </div>
 
+                        <label for="password" class="form-label">Password</label>
+                        <input type="text" id="password" th:field="*{password}" class="form-control mb-3"
+                            th:errorClass="is-invalid">
+                        <div th:if="${#fields.hasErrors('password')}" class="invalid-feedback">
+                            <ul>
+                                <li th:each="err : ${#fields.errors('password')}" th:text="${err}"></li>
+                            </ul>
+                        </div>
+
 
                         <label for="state" class="form-label">Stato</label>
-                        <select id="state" th:field="*{state}" class="form-select mb-5" th:errorClass="is-invalid">
+                        <select id="state" th:field="*{state}" class="form-select mb-3" th:errorClass="is-invalid">
                             <option value="">Seleziona uno stato</option>
                             <option value="Disponibile">Disponibile</option>
                             <option value="Non attivo">Non attivo</option>
@@ -72,6 +81,11 @@
                                 <li th:each="err : ${#fields.errors('state')}" th:text="${err}"></li>
                             </ul>
                         </div>
+
+                        <label for="roles" class="form-label">Ruolo</label>
+                        <select id="roles" th:field="*{roles}" class="form-select mb-5" th:errorClass="is-invalid">
+                            <option th:each="role : ${roles}" th:value="${role.id}" th:text="${role.name}"></option>
+                        </select>
 
 
 

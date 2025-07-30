@@ -1,6 +1,5 @@
 package com.platform.ticket.ticket_platform.controller;
 
-
 import java.util.List;
 import java.util.Optional;
 import java.util.Set;
@@ -28,7 +27,6 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 
-
 @Controller
 @RequestMapping("/users")
 public class UserController {
@@ -37,26 +35,24 @@ public class UserController {
 
     @Autowired
     private RoleRepository roleRepository;
-    
+
     @Autowired
     private UserRepository userRepository;
-
 
     UserController(PasswordEncoder passwordEncoder) {
         this.passwordEncoder = passwordEncoder;
     }
 
-
     @GetMapping
-    public String index(Model model, @RequestParam(value = "keyword", required = false) String keyword, @RequestParam(value = "page", defaultValue = "0")int page) {
+    public String index(Model model, @RequestParam(value = "keyword", required = false) String keyword,
+            @RequestParam(value = "page", defaultValue = "0") int page) {
 
         int pageSize = 10;
         Page<User> usersPage;
-        
 
         if (keyword != null && !keyword.isEmpty()) {
             usersPage = userRepository.findByNameContainingIgnoreCase(keyword, PageRequest.of(page, pageSize));
-        }else{
+        } else {
             usersPage = userRepository.findAll(PageRequest.of(page, pageSize));
         }
 
@@ -68,8 +64,7 @@ public class UserController {
 
         return "users/index";
     }
-    
-    
+
     @GetMapping("/create")
     public String create(Model model) {
 
@@ -86,14 +81,15 @@ public class UserController {
     @PostMapping("/create")
     public String store(@Valid @ModelAttribute("user") User formUser, BindingResult bindingResult, Model model) {
 
-        
-
         if (bindingResult.hasErrors()) {
             model.addAttribute("roles", roleRepository.findAll());
             return "users/create";
         }
 
-        Set<Role> selectedRole = formUser.getRoles().stream().map(role -> roleRepository.findById(role.getId()).orElseThrow(() -> new IllegalArgumentException("Ruolo non valido"))).collect(Collectors.toSet());
+        Set<Role> selectedRole = formUser.getRoles().stream()
+                .map(role -> roleRepository.findById(role.getId())
+                        .orElseThrow(() -> new IllegalArgumentException("Ruolo non valido")))
+                .collect(Collectors.toSet());
 
         formUser.setName(formUser.getName());
         formUser.setSurname(formUser.getSurname());
@@ -110,12 +106,14 @@ public class UserController {
     public String edit(@PathVariable("id") Integer id, Model model) {
 
         Optional<User> user = userRepository.findById(id);
-        
+        List<Role> roles = roleRepository.findAll();
+
         if (user.isEmpty()) {
             return "redirect:/error/404";
         }
 
-        model.addAttribute("user",user.get());
+        model.addAttribute("user", user.get());
+        model.addAttribute("roles", roles);
         return "users/edit";
     }
 
@@ -124,19 +122,23 @@ public class UserController {
             BindingResult bindingResult, Model model) {
 
         User user = userRepository.findById(id).orElseThrow();
-        
 
         if (bindingResult.hasErrors()) {
-            
-            return "users/edit";
+            model.addAttribute("roles", roleRepository.findAll());
+            return "/users/edit";
         }
+
+        Set<Role> selectedRole = formUser.getRoles().stream()
+                .map(role -> roleRepository.findById(role.getId())
+                        .orElseThrow(() -> new IllegalArgumentException("Ruolo non valido")))
+                .collect(Collectors.toSet());
 
         user.setName(formUser.getName());
         user.setSurname(formUser.getSurname());
         user.setEmail(formUser.getEmail());
+        user.setPassword(passwordEncoder.encode(formUser.getPassword()));
         user.setState(formUser.getState());
-       
-   
+        user.setRoles(selectedRole);
 
         userRepository.save(user);
 
@@ -144,12 +146,10 @@ public class UserController {
     }
 
     @PostMapping("/delete/{id}")
-    public String delete(@PathVariable("id")Integer id, Model model) {
-        
+    public String delete(@PathVariable("id") Integer id, Model model) {
+
         userRepository.deleteById(id);
         return "redirect:/users";
     }
 
-    
-    
 }

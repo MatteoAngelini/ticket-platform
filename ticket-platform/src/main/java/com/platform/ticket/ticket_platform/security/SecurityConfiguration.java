@@ -30,7 +30,7 @@ public class SecurityConfiguration {
 
                 //Accessi condivisi
                 .requestMatchers("/notes/**").hasAnyAuthority("Admin", "Operatore")
-                .requestMatchers("/tickets/edit/**").hasAnyAuthority("Admin", "Operatore")
+                .requestMatchers("/tickets/edit/**", "/tickets/{id}").hasAnyAuthority("Admin", "Operatore")
 
                 //Accessi pubblici
                 .requestMatchers("/home/**","/css/**","/img/**","/js/**","/webjars/**").permitAll()

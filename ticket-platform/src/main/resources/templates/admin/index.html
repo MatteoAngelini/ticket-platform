@@ -70,7 +70,7 @@
                         <table class="table table-striped table-hover">
                             <thead>
                                 <tr>
-                                    <th scope="col">Ticket Id</th>
+                                    <th scope="col" class="text-center">Ticket Id</th>
                                     <th scope="col">Assegnato a</th>
                                     <th scope="col">Titolo</th>
                                     <th scope="col">Categoria</th>
@@ -81,7 +81,7 @@
                             </thead>
                             <tbody class="table-group-divider">
                                 <tr th:each="ticket : ${tickets}" class="align-middle">
-                                    <td>[[*{ticket.id}]]</td>
+                                    <td class="align-middle text-center">[[*{ticket.id}]]</td>
                                     <td>[[*{ticket.user.name}]] [[*{ticket.user.surname}]]</td>
                                     <td><a th:href="@{/tickets/{id}(id=${ticket.id})}"
                                             class="text-decoration-none text-primary">[[*{ticket.title}]]</a></td>
