@@ -1,4 +1,5 @@
-<nav class="navbar navbar-expand-lg fixed-top mb-5 shadow" th:fragment="navbar" style="background-color: #e3f2fd; height: 80px;" data-bs-theme="light">
+<nav class="navbar navbar-expand-lg fixed-top mb-5 shadow" th:fragment="navbar"
+    style="background-color: #e3f2fd; height: 80px;" data-bs-theme="light">
     <div class="container ">
         <img th:src="@{/img/logo.png}" alt="" width="80px" th:href="@{/}">
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavDropdown"
@@ -36,7 +37,7 @@
                                 style="width: 50px; height: 50px; object-fit: cover;" class="img-fluid rounded-circle">
                         </button>
                         <ul class="dropdown-menu dropdown-menu-end">
-                            <li class="d-flex justify-content-start mx-4 align-items-center" style="width: 220px;"
+                            <li class="d-flex justify-content-start mx-2 align-items-center" style="width: 220px;"
                                 th:switch="${#authentication.principal.name}">
 
                                 <img th:case="''" width="40px" height="40px"
@@ -61,29 +62,34 @@
                                 <div class="ps-2 d-flex flex-column dropdown-header">
                                     <span class="fw-bold"
                                         th:text="${#authentication.principal.name + ' ' + #authentication.principal.surname}"></span>
-                                    <span th:text="${#authentication.principal.state}"></span>
+                                    <span th:switch="${#authentication.principal.state}">
+                                        <span th:case="'Non attivo'" class="badge text-bg-danger"> Non attivo</span>
+                                        <span th:case="'Disponibile'" class="badge text-bg-success"> Disponibile</span>
+                                    </span>
                                 </div>
                             </li>
-                            <li class="m-2 text-secondary">
-                                <strong class="text-secondary">Ruolo</strong>
-                                <span th:text="${#strings.listJoin(#authentication.authorities, ', ')}"></span>
+                            <li class="mx-2 mt-2">
+                                <small><strong class="text-secondary">Ruolo</strong></small>
+                                <span class="badge text-bg-primary"
+                                    th:text="${#strings.listJoin(#authentication.authorities, ', ')}"></span>
                             </li>
 
                             <li>
                                 <hr class="dropdown-divider">
                             </li>
 
-                            <li class="d-flex justify-content-start m-2">
+                            <li class="d-flex justify-content-start mx-2">
                                 <span><a th:href="@{/logout}"
                                         onclick="event.preventDefault(); document.getElementById('logout-form').submit();"
-                                        class="btn btn-sm btn-danger">Esci</a></span>
+                                        class="btn btn-sm btn-danger px-3">Esci</a></span>
                             </li>
                         </ul>
                         <form id="logout-form" th:action="@{/logout}" method="post" style="display: none;"></form>
 
                     </div>
                     <!-- SE NON LOGGATO -->
-                    <div th:unless="${#authorization.expression('isAuthenticated()')}" class="text-center d-inline align-middle ms-2">
+                    <div th:unless="${#authorization.expression('isAuthenticated()')}"
+                        class="text-center d-inline align-middle ms-2">
                         <span>
                             <a th:href="@{/login}" class="btn btn-primary" style="padding: 5px 10px;">Accedi</a>
                         </span>
