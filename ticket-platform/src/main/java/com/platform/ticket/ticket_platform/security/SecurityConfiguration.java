@@ -5,7 +5,7 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
-import org.springframework.security.crypto.factory.PasswordEncoderFactories;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 
@@ -26,13 +26,14 @@ public class SecurityConfiguration {
                 .requestMatchers("/operators/**").hasAuthority("Operatore")
                 .requestMatchers("/admin/**").hasAuthority("Admin")
                 .requestMatchers("/tickets/create" , "/tickets/delete/**").hasAuthority("Admin")
+                .requestMatchers("/users/**").hasAuthority("Admin")
 
                 //Accessi condivisi
                 .requestMatchers("/notes/**").hasAnyAuthority("Admin", "Operatore")
                 .requestMatchers("/tickets/edit/**").hasAnyAuthority("Admin", "Operatore")
 
                 //Accessi pubblici
-                .requestMatchers("/login","/css/**","/img/**","/js/**","/webjars/**").permitAll()
+                .requestMatchers("/home/**","/css/**","/img/**","/js/**","/webjars/**").permitAll()
                 .anyRequest().permitAll()
                 )
                 .exceptionHandling(exception -> exception
@@ -40,11 +41,11 @@ public class SecurityConfiguration {
                 )
                 .formLogin(form -> form
                     .loginPage("/login")
-                    .defaultSuccessUrl("/", true)
+                    .defaultSuccessUrl("/home", true)
                     .permitAll()
                 )
                 .logout(logout -> logout
-                .logoutSuccessUrl("/login?logout")
+                .logoutSuccessUrl("/?logout")
                 .permitAll()
                 );
         return http.build();
@@ -59,7 +60,7 @@ public class SecurityConfiguration {
 
     @Bean
     PasswordEncoder passwordEncoder() {
-        return PasswordEncoderFactories.createDelegatingPasswordEncoder();
+        return new BCryptPasswordEncoder();
     }
 
 }

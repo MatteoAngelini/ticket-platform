@@ -96,22 +96,22 @@
                                         <a type="button" th:href="@{/tickets/edit/{id}(id=${ticket.id})}"
                                             class="btn btn-sm btn-outline-primary"><i class="bi bi-pencil-fill"></i></a>
                                         <button type="button" class="btn btn-sm btn-outline-primary"
-                                            data-bs-toggle="modal" data-bs-target="#deleteModal">
+                                            data-bs-toggle="modal" th:data-bs-target="${'#deleteModal_' + ticket.id}">
                                             <i class="bi bi-trash-fill"></i>
                                         </button>
 
-                                        <div class="modal fade" id="deleteModal" tabindex="-1"
-                                            aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                        <div class="modal fade" th:id="'deleteModal_' + ${ticket.id}" tabindex="-1"
+                                            aria-labelledby="modalLabel_${ticket.id}" aria-hidden="true">
                                             <div class="modal-dialog modal-dialog-centered">
-                                                <div class="modal-content" th:object="${ticket}">
+                                                <div class="modal-content">
                                                     <div class="modal-header">
-                                                        <h1 class="modal-title fs-5" id="exampleModalLabel">Eliminazione
-                                                            del ticket #[[*{id}]] - [[*{title}]]</h1>
+                                                        <h1 class="modal-title fs-5" id="'modalLabel_' + ${ticket.id}">Eliminazione
+                                                            del ticket #[[${ticket.id}]] - [[${ticket.title}]]</h1>
                                                         <button type="button" class="btn-close" data-bs-dismiss="modal"
                                                             aria-label="Close"></button>
                                                     </div>
                                                     <div class="modal-body">
-                                                        Sei sicuro di voler eliminare il ticket con id: [[*{id}]] ?
+                                                        Sei sicuro di voler eliminare il ticket con id: [[${ticket.id}]] ?
                                                     </div>
                                                     <div class="modal-footer justify-content-between">
                                                         <form th:action="@{'/tickets/delete/{id}'(id=${ticket.id})}"

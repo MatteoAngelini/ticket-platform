@@ -20,7 +20,7 @@ public class HomeController {
     @Autowired
     private TicketRepository ticketRepository;
 
-    @GetMapping
+    @GetMapping("/home")
     public String index(Model model) {
 
         long ticketCount = ticketRepository.count();
@@ -31,6 +31,11 @@ public class HomeController {
         
         return "home/index";
 
+    }
+
+    @GetMapping
+    public String login() {
+        return "home/login";
     }
     
 }

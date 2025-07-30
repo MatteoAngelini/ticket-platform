@@ -45,7 +45,7 @@ public class AdminController {
         model.addAttribute("totalPages", ticketsPage.getTotalPages());
         model.addAttribute("keyword", keyword);
 
-        return "/admin/show";
+        return "/admin/index";
     }
     
     

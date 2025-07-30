@@ -147,7 +147,7 @@ public class TicketController {
     public String delete(@PathVariable("id")Integer id, Model model) {
         
         ticketRepository.deleteById(id);
-        return "redirect:/";
+        return "redirect:/admin";
     }
     
 

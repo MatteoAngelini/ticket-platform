@@ -32,7 +32,7 @@ public class OperatorController {
     private TicketRepository ticketRepository;
 
     @GetMapping
-    public String show(Model model, Principal principal,
+    public String index(Model model, Principal principal,
             @RequestParam(value = "keyword", required = false) String keyword,
             @RequestParam(value = "page", defaultValue = "0") int page) {
         String email = principal.getName();
@@ -57,7 +57,7 @@ public class OperatorController {
         model.addAttribute("user", user);
     
 
-        return "operators/show";
+        return "operators/index";
 
     }
 
