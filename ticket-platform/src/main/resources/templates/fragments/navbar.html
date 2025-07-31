@@ -40,7 +40,7 @@
                                 style="width: 50px; height: 50px; object-fit: cover;" class="img-fluid rounded-circle">
                         </button>
                         <ul class="dropdown-menu dropdown-menu-end">
-                            <li class="d-flex justify-content-start mx-2 align-items-center" style="width: 220px;"
+                            <li class="d-flex justify-content-start mx-2 align-items-center" style="width: 300px;"
                                 th:switch="${#authentication.principal.name}">
 
                                 <img th:case="''" width="40px" height="40px"
@@ -63,18 +63,18 @@
                                     class="img-fluid rounded-circle">
 
                                 <div class="ps-2 d-flex flex-column dropdown-header">
-                                    <span class="fw-bold"
-                                        th:text="${#authentication.principal.name + ' ' + #authentication.principal.surname}"></span>
+                                    <div>
+                                        <span class="fw-bold"
+                                        th:text="${#authentication.principal.name + ' ' + #authentication.principal.surname} + ' - '"></span><span class="badge text-bg-primary"
+                                        th:text="${#strings.listJoin(#authentication.authorities, ', ')}"></span>
+                                    </div>
                                     <span th:switch="${#authentication.principal.state}">
                                         <span th:case="'Non attivo'" class="badge text-bg-danger"> Non attivo</span>
                                         <span th:case="'Disponibile'" class="badge text-bg-success"> Disponibile</span>
                                     </span>
                                 </div>
                             </li>
-                            <li class="mx-2 mt-2">
-                                <small><strong class="text-secondary">Ruolo</strong></small>
-                                <span class="badge text-bg-primary" th:text="${#strings.listJoin(#authentication.authorities, ', ')}"></span>
-                            </li>
+                            
 
                             <li>
                                 <hr class="dropdown-divider">
@@ -83,7 +83,7 @@
                             <li class="d-flex justify-content-start mx-2">
                                 <span><a th:href="@{/}"
                                         onclick="event.preventDefault(); document.getElementById('logout-form').submit();"
-                                        class="btn btn-sm btn-danger px-3">Esci</a></span>
+                                        class="btn btn-sm btn-outline-primary px-3">Esci</a></span>
                             </li>
                         </ul>
                         <form id="logout-form" th:action="@{/logout}" method="post" style="display: none;"></form>
