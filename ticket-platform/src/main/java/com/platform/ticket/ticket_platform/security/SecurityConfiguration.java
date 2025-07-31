@@ -33,7 +33,7 @@ public class SecurityConfiguration {
                 .requestMatchers("/tickets/edit/**", "/tickets/{id}").hasAnyAuthority("Admin", "Operatore")
 
                 //Accessi pubblici
-                .requestMatchers("/home/**","/css/**","/img/**","/js/**","/webjars/**").permitAll()
+                .requestMatchers("/","/home/**","/css/**","/img/**","/js/**","/webjars/**").permitAll()
                 .anyRequest().permitAll()
                 )
                 .exceptionHandling(exception -> exception

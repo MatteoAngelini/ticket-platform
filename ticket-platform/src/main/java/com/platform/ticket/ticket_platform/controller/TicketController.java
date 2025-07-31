@@ -87,7 +87,7 @@ public class TicketController {
         formTicket.setUpdateDate(LocalDateTime.now());
         ticketRepository.save(formTicket);
 
-        return "redirect:/";
+        return "redirect:/admin";
     }
 
     @GetMapping("/edit/{id}")
@@ -140,7 +140,7 @@ public class TicketController {
 
         ticketRepository.save(ticketId);
 
-        return "redirect:/";
+        return "redirect:/admin";
     }
 
     @PostMapping("/delete/{id}")
