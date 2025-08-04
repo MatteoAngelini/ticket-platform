@@ -1,28 +1,28 @@
 <nav class="navbar navbar-expand-lg fixed-top mb-5 shadow" th:fragment="navbar"
     style="background-color: #e3f2fd; height: 80px;" data-bs-theme="light">
-    <div class="container ">
-        <a th:href="@{/home}" class="text-decoration-none"><img th:src="@{/img/logo.png}" alt="" width="80px"></a>
-        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavDropdown"
+    <div class="container" style="padding-left: 0px; padding-right: 0px;">
+        <a th:href="@{/home}" class="text-decoration-none ps-3"><img th:src="@{/img/logo.png}" alt="Logo Help Desk" width="70px" height="70px"></a>
+        <button class="navbar-toggler me-3" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavDropdown"
             aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
         </button>
-        <div class="collapse navbar-collapse" id="navbarNavDropdown">
+        <div class="collapse navbar-collapse" id="navbarNavDropdown" style="background-color: #e3f2fd;">
             <ul class="navbar-nav" style="margin-left: auto;">
-                <li class="nav-item d-flex align-items-center">
-                    <a class="nav-link " th:href="@{/home}">Home</a>
+                <li class="nav-item d-flex align-items-center ms-2">
+                    <a class="nav-link" th:href="@{/home}">Home</a>
                 </li>
-                <li class="nav-item d-flex align-items-center" sec:authorize="hasAuthority('Admin')">
-                    <a class="nav-link " th:href="@{/admin}">Lista ticket</a>
+                <li class="nav-item d-flex align-items-center ms-2" sec:authorize="hasAuthority('Admin')">
+                    <a class="nav-link" th:href="@{/admin}">Lista ticket</a>
                 </li>
-                <li class="nav-item d-flex align-items-center" sec:authorize="hasAuthority('Admin')">
-                    <a class="nav-link " th:href="@{/users}">Utenti</a>
+                <li class="nav-item d-flex align-items-center ms-2" sec:authorize="hasAuthority('Admin')">
+                    <a class="nav-link" th:href="@{/users}">Utenti</a>
                 </li>
-                <li class="nav-item  d-flex align-items-center" sec:authorize="hasAuthority('Operatore')">
-                    <a class="nav-link " th:href="@{/operators}">Lista ticket</a>
+                <li class="nav-item d-flex align-items-center ms-2" sec:authorize="hasAuthority('Operatore')">
+                    <a class="nav-link" th:href="@{/operators}">Lista ticket</a>
                 </li>
                 <li class="nav-item dropdown d-flex align-items-center">
                     <div th:if="${#authorization.expression('isAuthenticated()')}"
-                        class="btn-group text-center d-inline align-items-center">
+                        class="btn-group text-md-center text-sm-start d-inline align-items-center user-dropdown">
                         <button class="btn dropdown-toggle-icon" type="button" data-bs-toggle="dropdown"
                             aria-expanded="false" style="border: none;" th:switch="${#authentication.principal.name}">
                             <img th:case="''" width="50" height="50"

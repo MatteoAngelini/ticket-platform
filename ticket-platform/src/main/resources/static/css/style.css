@@ -59,3 +59,13 @@ body,
 .slide-in-up {
     animation: slideInUp 0.6s ease-out forwards;
 }
+
+/* Media */
+@media (max-width: 576px) {
+    .navbar-collapse{
+        padding: 10px;
+    }
+    .user-dropdown{
+        text-align: start;
+    }
+}

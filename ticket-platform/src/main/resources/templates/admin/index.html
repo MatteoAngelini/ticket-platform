@@ -26,7 +26,7 @@
                 una ricerca e
                 cliccare sul ticket per accedere al dettaglio</p>
             <div class="row">
-                <div class="col-6">
+                <div class="col-md-6 col-sm-12">
                     <form th:action="@{/admin}" method="get">
                         <div class="input-group mb-3">
                             <input type="search" class="form-control" placeholder="Digita titolo ticket per ricercare"
@@ -39,7 +39,7 @@
                 </div>
             </div>
             <div class="row">
-                <div class="col-6">
+                <div class="col-md-6 col-sm-12">
                     <nav aria-label="...">
                         <ul class="pagination pagination-sm justify-content-start">
                             <li class="page-item " th:classappend="${currentPage == 0} ? 'disabled'">
@@ -93,7 +93,7 @@
                                         <span th:case="'In corso'" class="badge bg-warning text-dark">In corso</span>
                                         <span th:case="'Completato'" class="badge bg-success">Completato</span>
                                     </td>
-                                    <td>
+                                    <td class="justify-content-between">
                                         <a type="button" th:href="@{/tickets/edit/{id}(id=${ticket.id})}"
                                             class="btn btn-sm btn-outline-primary"><i class="bi bi-pencil-fill"></i></a>
                                         <button type="button" class="btn btn-sm btn-outline-primary"
