@@ -1,7 +1,8 @@
 <nav class="navbar navbar-expand-lg fixed-top mb-5 shadow" th:fragment="navbar"
     style="background-color: #e3f2fd; height: 80px;" data-bs-theme="light">
     <div class="container" style="padding-left: 0px; padding-right: 0px;">
-        <a th:href="@{/home}" class="text-decoration-none ps-3"><img th:src="@{/img/logo.png}" alt="Logo Help Desk" width="70px" height="70px"></a>
+        <a th:href="@{/home}" class="text-decoration-none ps-3"><img th:src="@{/img/logo.png}" alt="Logo Help Desk"
+                width="70px" height="70px"></a>
         <button class="navbar-toggler me-3" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavDropdown"
             aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
@@ -67,7 +68,7 @@
                                         <span class="fw-bold"
                                             th:text="${#authentication.principal.name + ' ' + #authentication.principal.surname} + ' - '"></span><span
                                             class="badge text-bg-primary"
-                                            th:text="${#strings.listJoin(#authentication.authorities, ', ')}"></span>
+                                            th:text="${#strings.listJoin(#authentication.authorities, '')}"></span>
                                     </div>
                                     <span th:switch="${#authentication.principal.state}">
                                         <span th:case="'Non attivo'" class="badge text-bg-danger"> Non attivo</span>
@@ -82,8 +83,7 @@
                             </li>
 
                             <li class="d-flex justify-content-start mx-2">
-                                <span><a th:href="@{/}"
-                                        onclick="event.preventDefault(); document.getElementById('logout-form').submit();"
+                                <span><a onclick="event.preventDefault(); document.getElementById('logout-form').submit();"
                                         class="btn btn-sm btn-outline-primary px-3">Esci</a></span>
                             </li>
                         </ul>
