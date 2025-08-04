@@ -10,7 +10,6 @@ import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-
 import com.platform.ticket.ticket_platform.model.Ticket;
 import com.platform.ticket.ticket_platform.model.User;
 import com.platform.ticket.ticket_platform.repository.TicketRepository;
@@ -39,15 +38,14 @@ public class OperatorController {
         User user = userRepository.findByEmail(email)
                 .orElseThrow(() -> new UsernameNotFoundException("Utente non trovato"));
 
-
-
         int pageSize = 10;
         Page<Ticket> ticketsPage;
 
         if (keyword != null && !keyword.isEmpty()) {
-            ticketsPage = ticketRepository.findByUser_IdAndTitleContainingIgnoreCase(user.getId(),keyword, PageRequest.of(page, pageSize));
+            ticketsPage = ticketRepository.findByUser_IdAndTitleContainingIgnoreCase(user.getId(), keyword,
+                    PageRequest.of(page, pageSize));
         } else {
-            ticketsPage = ticketRepository.findByUser_Id(user.getId(),PageRequest.of(page, pageSize));
+            ticketsPage = ticketRepository.findByUser_Id(user.getId(), PageRequest.of(page, pageSize));
         }
 
         model.addAttribute("ticketsPage", ticketsPage);
@@ -55,7 +53,6 @@ public class OperatorController {
         model.addAttribute("currentPage", page);
         model.addAttribute("totalPages", ticketsPage.getTotalPages());
         model.addAttribute("user", user);
-    
 
         return "operators/index";
 

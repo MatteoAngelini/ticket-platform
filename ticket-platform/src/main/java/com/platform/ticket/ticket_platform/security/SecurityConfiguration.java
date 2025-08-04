@@ -22,32 +22,28 @@ public class SecurityConfiguration {
     SecurityFilterChain filterChain(HttpSecurity http)
             throws Exception {
         http.authorizeHttpRequests(requests -> requests
-                //Accessi riservati
+                // Accessi riservati
                 .requestMatchers("/operators/**").hasAuthority("Operatore")
                 .requestMatchers("/admin/**").hasAuthority("Admin")
-                .requestMatchers("/tickets/create" , "/tickets/delete/**").hasAuthority("Admin")
+                .requestMatchers("/tickets/create", "/tickets/delete/**").hasAuthority("Admin")
                 .requestMatchers("/users/**").hasAuthority("Admin")
 
-                //Accessi condivisi
+                // Accessi condivisi
                 .requestMatchers("/notes/**").hasAnyAuthority("Admin", "Operatore")
                 .requestMatchers("/tickets/edit/**", "/tickets/{id}").hasAnyAuthority("Admin", "Operatore")
 
-                //Accessi pubblici
-                .requestMatchers("/","/home/**","/css/**","/img/**","/js/**","/webjars/**").permitAll()
-                .anyRequest().permitAll()
-                )
+                // Accessi pubblici
+                .requestMatchers("/", "/home/**", "/css/**", "/img/**", "/js/**", "/webjars/**").permitAll()
+                .anyRequest().permitAll())
                 .exceptionHandling(exception -> exception
-                    .accessDeniedPage("/error/403")
-                )
+                        .accessDeniedPage("/error/403"))
                 .formLogin(form -> form
-                    .loginPage("/login")
-                    .defaultSuccessUrl("/home", true)
-                    .permitAll()
-                )
+                        .loginPage("/login")
+                        .defaultSuccessUrl("/home", true)
+                        .permitAll())
                 .logout(logout -> logout
-                .logoutSuccessUrl("/?logout")
-                .permitAll()
-                );
+                        .logoutSuccessUrl("/?logout")
+                        .permitAll());
         return http.build();
     }
 

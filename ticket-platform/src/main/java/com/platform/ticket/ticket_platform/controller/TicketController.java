@@ -3,7 +3,6 @@ package com.platform.ticket.ticket_platform.controller;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -14,8 +13,6 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
-
-
 import com.platform.ticket.ticket_platform.model.Ticket;
 import com.platform.ticket.ticket_platform.model.User;
 import com.platform.ticket.ticket_platform.repository.CategoryRepository;
@@ -23,8 +20,6 @@ import com.platform.ticket.ticket_platform.repository.TicketRepository;
 import com.platform.ticket.ticket_platform.repository.UserRepository;
 import jakarta.validation.Valid;
 import org.springframework.web.bind.annotation.PostMapping;
-
-
 
 @Controller
 @RequestMapping("/tickets")
@@ -39,13 +34,11 @@ public class TicketController {
     @Autowired
     private UserRepository userRepository;
 
-
     @GetMapping("/{id}")
     public String show(@PathVariable("id") Integer id, Model model) {
 
         Ticket ticket = ticketRepository.findById(id)
                 .orElseThrow(() -> new IllegalArgumentException("Ticket non trovato con id: " + id));
-      
 
         model.addAttribute("notes", ticket.getNotes());
         model.addAttribute("ticket", ticket);
@@ -61,7 +54,6 @@ public class TicketController {
         Ticket ticket = new Ticket();
 
         ticket.setCreationDate(LocalDateTime.now());
-        
 
         model.addAttribute("ticket", ticket);
         model.addAttribute("categories", categoryRepository.findAll());
@@ -130,7 +122,6 @@ public class TicketController {
             return "/tickets/edit";
         }
 
-        
         ticketId.setTitle(formTicket.getTitle());
         ticketId.setDescription(formTicket.getDescription());
         ticketId.setCategory(formTicket.getCategory());
@@ -144,11 +135,10 @@ public class TicketController {
     }
 
     @PostMapping("/delete/{id}")
-    public String delete(@PathVariable("id")Integer id, Model model) {
-        
+    public String delete(@PathVariable("id") Integer id, Model model) {
+
         ticketRepository.deleteById(id);
         return "redirect:/admin";
     }
-    
 
 }

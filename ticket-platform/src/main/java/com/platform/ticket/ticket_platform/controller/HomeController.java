@@ -5,10 +5,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-
 import com.platform.ticket.ticket_platform.repository.NoteRepository;
 import com.platform.ticket.ticket_platform.repository.TicketRepository;
-
 
 @Controller
 @RequestMapping("/")
@@ -28,7 +26,7 @@ public class HomeController {
 
         model.addAttribute("ticketCount", ticketCount);
         model.addAttribute("noteCount", noteCount);
-        
+
         return "home/index";
 
     }
@@ -37,5 +35,5 @@ public class HomeController {
     public String login() {
         return "home/login";
     }
-    
+
 }

@@ -1,46 +1,61 @@
-body, .btn, .form-control, .nav-link, .dropdown-menu, .alert {
+/* Font family */
+body,
+.btn,
+.form-control,
+.nav-link,
+.dropdown-menu,
+.alert {
     font-family: 'Source Sans Pro', sans-serif !important;
 }
 
-.main-content{
+/* Main */
+.main-content {
     margin-top: 100px;
     min-height: 100vh;
 }
 
-.offcanvas,
-.offcanvas-body{
-    overflow: visible !important;
-}
-.dropdown-menu{
+/* Dropdown menu user */
+.dropdown-menu {
     z-index: 3000 !important;
 }
-#footer{
+
+/* Footer */
+#footer {
     background-color: #e3f2fd;
     padding: 16px;
 }
-@keyframes slideInLeft{
-    from{
+
+
+
+/* Effects */
+@keyframes slideInLeft {
+    from {
         transform: translateX(-100px);
         opacity: 0;
     }
-    to{
+
+    to {
         transform: translateX(0);
         opacity: 1;
     }
 }
-@keyframes slideInUp{
-    from{
+
+@keyframes slideInUp {
+    from {
         transform: translateY(50px);
         opacity: 0;
     }
-    to{
+
+    to {
         transform: translateY(0);
         opacity: 1;
     }
 }
-.slide-in-left{
+
+.slide-in-left {
     animation: slideInLeft 0.6s ease-out forwards;
 }
-.slide-in-up{
+
+.slide-in-up {
     animation: slideInUp 0.6s ease-out forwards;
 }

@@ -65,8 +65,9 @@
                                 <div class="ps-2 d-flex flex-column dropdown-header">
                                     <div>
                                         <span class="fw-bold"
-                                        th:text="${#authentication.principal.name + ' ' + #authentication.principal.surname} + ' - '"></span><span class="badge text-bg-primary"
-                                        th:text="${#strings.listJoin(#authentication.authorities, ', ')}"></span>
+                                            th:text="${#authentication.principal.name + ' ' + #authentication.principal.surname} + ' - '"></span><span
+                                            class="badge text-bg-primary"
+                                            th:text="${#strings.listJoin(#authentication.authorities, ', ')}"></span>
                                     </div>
                                     <span th:switch="${#authentication.principal.state}">
                                         <span th:case="'Non attivo'" class="badge text-bg-danger"> Non attivo</span>
@@ -74,7 +75,7 @@
                                     </span>
                                 </div>
                             </li>
-                            
+
 
                             <li>
                                 <hr class="dropdown-divider">

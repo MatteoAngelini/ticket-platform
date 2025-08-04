@@ -3,11 +3,9 @@ package com.platform.ticket.ticket_platform.security;
 import java.util.Collection;
 import java.util.HashSet;
 import java.util.Set;
-
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
-
 import com.platform.ticket.ticket_platform.model.Role;
 import com.platform.ticket.ticket_platform.model.User;
 
@@ -46,22 +44,22 @@ public class DatabaseUserDetails implements UserDetails {
 
     @Override
     public String getUsername() {
-        return this.email; 
+        return this.email;
     }
 
-    public String getName(){
+    public String getName() {
         return this.name;
     }
 
-    public String getSurname(){
+    public String getSurname() {
         return this.surname;
     }
 
-    public Integer getId(){
+    public Integer getId() {
         return this.id;
     }
 
-    public String getState(){
+    public String getState() {
         return this.state;
     }
 

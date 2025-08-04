@@ -1,9 +1,7 @@
 package com.platform.ticket.ticket_platform.model;
 
 import java.time.LocalDateTime;
-
 import org.springframework.format.annotation.DateTimeFormat;
-
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -23,7 +21,7 @@ public class Note {
     private Integer Id;
 
     @Lob
-    @NotEmpty
+    @NotEmpty(message = "Inserire campo di testo obbligatorio")
     private String description;
 
     @DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm")

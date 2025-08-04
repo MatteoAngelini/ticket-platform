@@ -3,9 +3,7 @@ package com.platform.ticket.ticket_platform.model;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
-
 import com.fasterxml.jackson.annotation.JsonIgnore;
-
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
@@ -27,38 +25,32 @@ public class User {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer Id;
 
-    @NotBlank
+    @NotBlank(message = "L'email non può essere vuota o con spazi.")
     private String email;
 
-    @NotBlank
+    @NotBlank(message = "La password non può essere vuota o con spazi.")
     @JsonIgnore
     private String password;
 
-    @NotBlank
+    @NotBlank(message = "Il nome non può essere vuoto o con spazi.")
     private String name;
 
-    @NotBlank
+    @NotBlank(message = "Il cognome non può essere vuoto o con spazi.")
     private String surname;
 
-    
     private String state;
 
     @ManyToMany(fetch = FetchType.EAGER)
-    @JoinTable(
-        name = "user_roles",
-        joinColumns = @JoinColumn(name = "user_id"),
-        inverseJoinColumns = @JoinColumn(name = "role_id")
-    )
+    @JoinTable(name = "user_roles", joinColumns = @JoinColumn(name = "user_id"), inverseJoinColumns = @JoinColumn(name = "role_id"))
     private Set<Role> roles = new HashSet<>();
 
-    @OneToMany(mappedBy = "user" , cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
     @JsonIgnore
     private List<Ticket> tickets;
 
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
     @JsonIgnore
     private List<Note> notes;
-
 
     // Getters and Setters
 
@@ -110,8 +102,7 @@ public class User {
         this.state = state;
     }
 
-
-    //Getters and Setters ManyToMany
+    // Getters and Setters ManyToMany
 
     public Set<Role> getRoles() {
         return this.roles;
@@ -121,8 +112,8 @@ public class User {
         this.roles = roles;
     }
 
-    //Getters and Setters OneToMany
-    
+    // Getters and Setters OneToMany
+
     public List<Ticket> getTickets() {
         return this.tickets;
     }
@@ -131,7 +122,6 @@ public class User {
         this.tickets = tickets;
     }
 
-
     public List<Note> getNotes() {
         return this.notes;
     }
@@ -139,8 +129,5 @@ public class User {
     public void setNotes(List<Note> notes) {
         this.notes = notes;
     }
-
-
-    
 
 }
